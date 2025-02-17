@@ -1,0 +1,41 @@
+DESCRIPTION OF MODEL ->
+This is a Single-Layer Perceptron model that classifies binary inputs using a step activation function. It starts with randomly initialized weights and a bias, which are updated during training using the Perceptron Learning Rule.                                                                                                             The perceptron is trained on truth tables for NAND and XOR gates, adjusting its weights to minimize errors.While it successfully learns the NAND function, it fails on XOR due to its inability to handle non-linearly separable data.
+
+DESCRIPTION OF CODE  ->
+This code defines a Perceptron model for binary classification with the following key components:
+
+     -model initialization:
+                Randomly initializes weights, including bias, based on input size.
+                Sets learning rate and number of epochs.
+
+     -Activation Function:
+                Uses a step function: Returns 1 if input >= 0, otherwise returns 0.
+
+     -Prediction:                                                                                            
+                For any input, the model computes a weighted sum (including the bias) and applies 
+                the step function to predict a class label (0 or 1).
+
+     -Training function:
+                Perceptron Learning Rule: The model adjusts the weights based on the error 
+                The training loop runs for a specified number of epochs, ensuring multiple passes over the dataset to refine the weights.
+
+
+MODEL PERFORMANCE EVALUATION ->
+                Accuracy Calculation: Accuracy is calculated as the fraction of correct predictions out of total samples. 
+
+                -NAND Dataset: The NAND function is linearly separable, so the perceptron should be able to learn this logic function perfectly.(achieves 100% accuracy)
+
+                -XOR Dataset: The XOR function is not linearly separable, so the perceptron struggles and can't achieve perfect accuracy. (achieves 50% accuracy)  
+
+
+MY COMMENTS:-
+Limitation: 
+         The perceptron can only solve problems where the data is linearly separable (e.g., NAND function). It fails to learn complex patterns in non-linearly separable data (e.g., XOR).
+          It’s a simple, one-layer model that can't learn complex patterns.
+
+Scope of improvement:
+         Turn the perceptron into a Multi-Layer Perceptron (MLP) to capture more complex patterns.          
+
+
+
+
