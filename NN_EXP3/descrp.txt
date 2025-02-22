@@ -1,0 +1,51 @@
+description model:->
+This model is a three-layer neural network built using TensorFlow (without Keras) to classify MNIST handwritten digits. It consists of an input layer, two hidden layers with Sigmoid activation, and an output layer with Softmax for classification. The model is trained using Adam optimizer and cross-entropy loss, with backpropagation for weight updates. It processes the dataset by normalizing images and using one-hot encoding for labels. Training is done in batches over multiple epochs, and accuracy is evaluated on the test set.
+
+description of code:->
+Dataset Loading & Preprocessing (preprocess function)
+
+Loads the MNIST dataset using tensorflow_datasets.
+Flattens 28x28 images into 1D arrays of size 784.
+Normalizes pixel values to [0,1].
+Converts labels to one-hot encoding.
+Defining Network Parameters
+
+Input layer: 784 neurons (flattened image pixels).
+Hidden layer 1: 128 neurons with Sigmoid activation.
+Hidden layer 2: 64 neurons with Sigmoid activation.
+Output layer: 10 neurons (one for each digit 0-9) using Softmax.
+Learning rate: 0.01, Batch size: 100, Epochs: 20.
+Placeholders for Input & Output
+
+X: Placeholder for input images.
+Y: Placeholder for labels (one-hot encoded).
+Initializing Weights & Biases (weights and biases dictionaries)
+
+Randomly initializes weights and biases for all layers.
+Feed-Forward Network (neural_network function)
+
+Layer 1: Applies matmul (matrix multiplication) followed by Sigmoid activation.
+Layer 2: Applies matmul followed by Sigmoid activation.
+Output Layer: Applies matmul to produce logits (raw scores).
+Forward Propagation
+
+Computes Softmax activation on output logits to get class probabilities.
+Loss Function & Optimizer
+
+Uses Softmax cross-entropy loss for classification.
+Optimizes using Adam optimizer with backpropagation.
+Model Evaluation (accuracy calculation)
+
+Compares predicted and actual labels using argmax and computes accuracy.
+Training the Model (Session block)
+
+Initializes TensorFlow session.
+Trains the model for 20 epochs using mini-batch gradient descent.
+Calculates loss and updates weights using backpropagation.
+Evaluates test accuracy after every epoch.
+Final Model Evaluation
+
+Computes final test accuracy after training is complete.
+
+MY COMMENTS:->
+-Use ReLU (Rectified Linear Unit) instead for better gradient flow.
