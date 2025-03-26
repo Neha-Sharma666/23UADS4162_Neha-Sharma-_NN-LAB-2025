@@ -1,0 +1,58 @@
+Model Description:
+This code implements a multi-layer neural network (MLP) using TensorFlow (without Keras) for classifying the MNIST handwritten digits dataset.
+
+->It performs hyperparameter tuning by iterating over different combinations of:
+    Activation functions: sigmoid, tanh, relu.
+    Single hidden layer sizes: 256, 128, 64.
+    Learning rate: 0.1.
+    Batch size: 10.
+    Number of epochs: 50
+
+Code description:->
+1.Dataset Loading and Preprocessing
+-Loads the MNIST dataset using tensorflow_datasets.
+-Flattens images from 28x28 into 1D arrays of size 784.
+-Normalizes pixel values to the range [0, 1] for efficient training.
+-Converts labels to one-hot encoding for multi-class classification.
+
+2. Defining Network Parameters
+-Input layer: 784 neurons (for 28x28 pixel images).
+Hidden layer:
+  Single layer with 256, 128, or 64 neurons based on the combination.
+Activation functions: sigmoid, tanh, or relu.
+Output layer:
+10 neurons (one for each digit: 0-9).
+Uses Softmax activation for multi-class classification.
+-Placeholders:
+X: Input images.
+Y: One-hot encoded labels.
+
+3. Initializing Weights & Biases (initialize_weights function)
+-Random initialization of weights and biases.
+-Uses truncated normal distribution for stable weight initialization.
+-Weight and bias dimensions:
+W1: (784, hidden layer size)
+b1: (hidden layer size)
+W2: (hidden layer size, 10)
+b2: (10)
+
+4. Feed-Forward Network (Forward Propagation)
+Hidden layer:
+-Matrix multiplication between input and weights → Z1 = X @ W1 + b1.
+-Applies the selected activation function:
+Sigmoid: Squashes output between 0 and 1.
+Tanh: Squashes output between -1 and 1.
+ReLU: Sets negative values to 0, allowing faster convergence.
+Output layer:
+    Matrix multiplication → Z2 = hidden_layer @ W2 + b2.
+Applies Softmax activation to compute class probabilities
+
+5. Loss Function & Optimizer
+Loss Function:
+    Uses softmax cross-entropy loss for multi-class classification.
+Optimizer:
+    Uses Adam optimizer for efficient weight updates.
+Backpropagation:
+    Computes the gradient of loss with respect to weights.
+    Updates weights and biases using the optimizer.
+
