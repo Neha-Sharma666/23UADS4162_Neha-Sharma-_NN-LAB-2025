@@ -22,14 +22,14 @@ Hidden layer:
 Activation functions: sigmoid, tanh, or relu.
 Output layer:
 10 neurons (one for each digit: 0-9).
-Uses Softmax activation for multi-class classification.
+Uses logits (raw scores before applying softmax)
 -Placeholders:
 X: Input images.
 Y: One-hot encoded labels.
 
 3. Initializing Weights & Biases (initialize_weights function)
 -Random initialization of weights and biases.
--Uses truncated normal distribution for stable weight initialization.
+-Uses  normal distribution for stable weight initialization.
 -Weight and bias dimensions:
 W1: (784, hidden layer size)
 b1: (hidden layer size)
@@ -50,9 +50,21 @@ Applies Softmax activation to compute class probabilities
 5. Loss Function & Optimizer
 Loss Function:
     Uses softmax cross-entropy loss for multi-class classification.
+    Computes the loss by comparing the predicted logits with the one-hot encoded labels.
 Optimizer:
-    Uses Adam optimizer for efficient weight updates.
-Backpropagation:
-    Computes the gradient of loss with respect to weights.
-    Updates weights and biases using the optimizer.
+   Uses Gradient Descent Optimizer for weight updates.
 
+6.Model Training
+Training Loop:
+Iterates through 50 epochs.
+Processes batches of 10 samples (batch size = 10).
+For each batch:
+-Performs forward propagation → computes predictions.
+-Applies backpropagation → adjusts weights and biases.
+Calculates and stores loss and accuracy at each epoch.
+
+->Comments:
+scope of improvement:
+1.Optimizing the Optimizer: Switch from SGD to Adam
+    -Use the Adam optimizer for faster and more stable convergence.
+2.using multiple hidden layer
