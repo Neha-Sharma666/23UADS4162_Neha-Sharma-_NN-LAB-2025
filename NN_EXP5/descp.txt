@@ -1,0 +1,51 @@
+>Model Description:
+This code implements a Convolutional Neural Network (CNN) using TensorFlow and Keras to classify the Fashion MNIST dataset, which contains grayscale images of clothing items categorized into 10 classes.
+
+-> It employs regularization and callback mechanisms to improve training stability and reduce overfitting, with the ability to tune:
+
+Optimizer (adam)
+Filter size in convolution layers (default: 5)
+L2 regularization strength (default: 0.001)
+Batch size (default: 64)
+Epochs (default: 30)
+
+Code Description:
+>Dataset Loading and Preprocessing
+Loads the Fashion MNIST dataset using tensorflow.keras.datasets.fashion_mnist.
+Normalizes the pixel values to the range [0, 1] by dividing by 255.0.
+Reshapes images from (28, 28) to (28, 28, 1) to make them compatible with CNN layers which expect channel dimensions.
+
+>Model Architecture 
+A sequential CNN architecture is defined with:
+Conv2D Layer 1: 32 filters of size (5x5) with ReLU activation and L2 regularization.
+Batch Normalization: Normalizes the output to improve stability and convergence.
+MaxPooling2D: Downsamples feature maps by a factor of 2.
+Conv2D Layer 2: 64 filters of size (5x5) with ReLU activation and L2 regularization.
+Batch Normalization and MaxPooling2D again.
+Conv2D Layer 3: 128 filters of size (3x3) with ReLU and L2 regularization.
+Global Average Pooling: Reduces each feature map to a single value (reduces overfitting).
+Dense Layer: Fully connected layer with 128 neurons, ReLU activation, and dropout (0.4) for regularization.
+Output Layer: 10-neuron softmax layer for multi-class classification.
+
+Compilation:
+Uses sparse_categorical_crossentropy as the loss function (since labels are integers, not one-hot).
+Tracks accuracy as a metric.
+Uses the Adam optimizer by default.
+
+->Callbacks:
+ReduceLROnPlateau: Reduces learning rate when the validation loss plateaus.
+EarlyStopping: Stops training if validation loss doesn't improve for 6 epochs and restores the best weights.
+ModelCheckpoint: Saves the best model based on validation loss.
+
+>Model Training
+      Trains the model on the training dataset with 20% used for validation.
+      Uses provided parameters (filter size, regularization strength, batch size, and optimizer).
+     Trains for a maximum of 30 epochs with callbacks monitoring performance.
+
+->Evaluation:
+    Evaluates model performance on the separate test dataset.
+
+>Scope of improvement:
+-Add More Convolutional Blocks:
+     Deeper CNNs can extract richer hierarchical features.    
+

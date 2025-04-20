@@ -1,0 +1,70 @@
+Model Description:
+This code implements a Recurrent Neural Network (RNN) using PyTorch to perform univariate time series forecasting on the Daily Minimum Temperatures dataset.
+
+-> It focuses on:
+    Predicting the next day’s temperature using a sliding window of past values (sequence length = 4).Using a single-layer RNN with a linear output head.
+    Training with Mean Squared Error (MSE) loss and the Adam optimizer.
+    Evaluating model performance by plotting actual vs predicted values.
+
+Code Description:
+1. Dataset Loading and Preprocessing
+   -Loads the Daily Minimum Temperatures dataset from a public URL.
+   -Parses the Date column as datetime and uses it as the index.
+   -Converts the values to float32 for numerical stability.
+-Normalization:
+    Applies MinMaxScaler to scale the temperature values between [0, 1] for efficient RNN training.
+
+2. Sequence Preparation:
+    -Defines a helper function create_sequences to build input-output pairs:
+    -Inputs (X) are sliding windows of length 4.
+    -Outputs (y) are the temperature immediately following each window.
+
+Example:
+Input: [T1, T2, T3, T4] → Output: T5.
+
+3. Data Splitting and Conversion
+    Splits the data into training (80%) and testing (20%) sets using train_test_split (without shuffling to preserve temporal order).
+
+    Converts the NumPy arrays to PyTorch tensors.
+    Reshapes the data for RNN input format:
+        [batch_size, sequence_length, input_features] = [N, 4, 1].
+
+4. Defining the RNN Model
+A custom RNNModel class is defined using PyTorch's nn.Module.
+>RNN Layer:
+   Input size: 1 (single temperature per timestep).
+   Hidden size: 16.
+   Uses batch-first format.
+
+>Fully Connected Layer:
+   Takes the final hidden state and maps to a single scalar output.
+   Only the final output from the RNN (last time step) is passed to the linear layer to predict the next temperature.
+
+5. Loss Function & Optimizer
+Loss Function:
+    nn.MSELoss is used for regression tasks.
+Optimizer:
+    Adam optimizer is used with a learning rate of 0.01 for adaptive learning during training.
+
+6. Model Training
+   -Runs for 50 epochs.
+   -In each epoch:
+   Sets model to training mode.
+   Computes output predictions from the training data.
+   Calculates MSE loss.
+   Performs backpropagation and updates weights.
+    Prints loss every 10 epochs to track progress.
+
+7. Model Evaluation
+    Sets model to evaluation mode using with torch.no_grad().
+    Predicts temperature values on the test set.
+    Inverse Scales the normalized predictions and actual values to restore the original temperature scale.
+    Prints a formatted comparison of actual vs predicted values.
+
+8. Visualization
+    Plots the actual vs predicted temperature curves using matplotlib:
+    Blue line: actual values,Orange dashed line: predicted values.
+
+>Scope of Improvement:
+    -Replace vanilla RNN with LSTM or GRU for better long-term dependency handling and stability.
+
