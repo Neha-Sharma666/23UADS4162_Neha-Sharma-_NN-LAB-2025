@@ -1,0 +1,81 @@
+Model Description:
+This code implements a binary image classification model using transfer learning with VGG16 to detect COVID-19 infection from CT scan images. The model is trained using Keras with TensorFlow backend and uses real CT scan images categorized into COVID and Non-COVID classes.
+
+-> It evaluates the model using:
+Accuracy
+F1 Score
+AUC Score
+
+Classification Report
+It also saves the trained model, metrics, and plots to Google Drive for future use.
+
+Code Description:
+1Google Drive Mount & File Upload
+Mounts the user's Google Drive to /content/drive to save outputs later.
+Uploads a ZIP file (COVID_CT_dataset.zip) from the local system.
+Extracts contents into a local folder.
+
+Dataset Preparation
+Directory structure: Assumes CT scan images are split into two folders: CT_COVID and CT_NonCOVID.
+Iterates over each folder and collects:
+File paths of images
+Corresponding labels (folder names)
+Stores this data in a pandas DataFrame .
+
+>Train-Test Split
+Splits the data into 80% training and 20% testing sets using train_test_split.
+Stratifies the split to maintain label proportions.
+
+> Data Generators
+Uses ImageDataGenerator to:
+Normalize image pixel values (rescale=1./255)
+Generate batches of training and testing data with target size 224x224
+Sets:
+batch_size=32 for training
+batch_size=1 for testing (for exact predictions per image)
+class_mode='binary' for binary classification
+
+> Model Architecture (Transfer Learning with VGG16)
+Loads VGG16 model pre-trained on ImageNet:
+include_top=False: removes original FC layers
+trainable=False: freezes convolutional layers
+Adds custom classification head:
+Flatten() layer to convert features into 1D
+Dense layer with 256 units and ReLU activation
+Dropout (0.5) to reduce overfitting
+Final Dense layer with 1 unit + sigmoid activation for binary output
+
+>Model Compilation
+Compiles the model with:
+Optimizer: Adam with learning rate 1e-4
+Loss: binary_crossentropy
+Metric: accuracy
+
+>Model Training
+Trains the model for 10 epochs on the training data (train_gen)
+
+Stores the training history (loss & accuracy per epoch)
+
+> Evaluation
+Predicts probabilities on the test set (test_gen)
+
+Converts probabilities to class labels using threshold 0.5
+
+Calculates:
+F1 Score
+Accuracy
+ROC-AUC Score
+Classification Report
+
+
+> Visualization
+Training Curves:
+   Plots accuracy and loss vs. epochs
+ROC Curve:
+Plots TPR vs FPR using true labels and predicted probabilities.
+
+>scope of improvemnet:
+   instead of  VGGNet,RESNet can be used
+   Use data augmentation in ImageDataGenerator to reduce overfitting.
+
+
